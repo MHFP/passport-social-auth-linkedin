@@ -8,18 +8,23 @@ var init = require('./init');
 passport.use(new LinkedInStrategy({
     consumerKey: config.linkedin.clientID,
     consumerSecret: config.linkedin.clientSecret,
-    callbackURL: config.linkedin.callbackURL
+    callbackURL: config.linkedin.callbackURL,
+    scope:        [ 'r_basicprofile', 'r_emailaddress', 'w_share', 'rw_company_admin'],
+    profileFields: ['id', 'first-name', 'last-name', 'email-address','public-profile-url']
   },
   // linkedin sends back the tokens and progile info
   function(token, tokenSecret, profile, done) {
-
     var searchQuery = {
       name: profile.displayName
     };
 
     var updates = {
+      email: profile._json.emailAddress,
+      pic: profile._json.publicProfileUrl,
+      profile,
       name: profile.displayName,
-      someID: profile.id
+      someID: profile.id,
+
     };
 
     var options = {

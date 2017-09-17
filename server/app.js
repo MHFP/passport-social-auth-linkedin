@@ -19,6 +19,7 @@ mongoose.connect('mongodb://localhost/passport-social-auth');
 var routes = require('./routes/index.js');
 
 
+
 // *** express instance *** //
 var app = express();
 
