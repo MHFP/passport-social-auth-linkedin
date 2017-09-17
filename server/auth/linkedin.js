@@ -10,7 +10,7 @@ passport.use(new LinkedInStrategy({
     consumerSecret: config.linkedin.clientSecret,
     callbackURL: config.linkedin.callbackURL,
     scope:        [ 'r_basicprofile', 'r_emailaddress', 'w_share', 'rw_company_admin'],
-    profileFields: ['id', 'first-name', 'last-name', 'email-address','public-profile-url']
+    profileFields: ['id', 'first-name', 'last-name', 'email-address','public-profile-url', 'picture-urls::(original)', 'headline', 'industry', 'positions', 'summary', 'specialties']
   },
   // linkedin sends back the tokens and progile info
   function(token, tokenSecret, profile, done) {
@@ -20,7 +20,7 @@ passport.use(new LinkedInStrategy({
 
     var updates = {
       email: profile._json.emailAddress,
-      pic: profile._json.publicProfileUrl,
+      pic: profile._json.pictureUrls.values[0],
       profile,
       name: profile.displayName,
       someID: profile.id,
